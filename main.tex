@@ -1,0 +1,134 @@
+\documentclass[journal, onecolumn, 12p]{IEEEtran}
+\usepackage{fontspec}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{amssymb, amsmath, amsfonts}
+\usepackage[left=1in,top=2cm,right=1in,nohead]{geometry}
+\usepackage{subfiles}
+\usepackage{color, soul}
+\usepackage{esdiff}
+\usepackage{physics}
+
+\usepackage{latexsym}
+\usepackage{epsfig,float,subcaption}
+
+\usepackage[russian, main=english]{babel}
+\babelfont{rm}{FreeSerif}
+
+
+\usepackage{mathbbol}
+\DeclareSymbolFontAlphabet{\mathbb}{AMSb}
+\DeclareSymbolFontAlphabet{\mathbbl}{bbold}
+
+
+\renewcommand{\vec}{\mathbf}
+\usepackage{listings}
+\usepackage[final]{matlab-prettifier}
+\lstset{
+    style=Matlab-editor,
+    basicstyle=\ttfamily
+}
+
+\usepackage{fancyhdr}
+\fancyhf{}
+
+\cfoot{\thepage}
+\pagestyle{plain} 
+
+
+% some from https://tex.stackexchange.com/questions/111116/what-is-the-best-looking-pseudo-code-package
+\newcounter{alg}[section] % defines algorithm counter for chapter-level
+\renewcommand{\thealg}{\thesection .\arabic{alg}}
+\lstnewenvironment{algorithm}[1][] %defines the algorithm listing environment
+{   
+    \refstepcounter{alg} %increments algorithm number
+    \lstset{  
+        firstnumber=last,
+        escapechar=!,
+        mathescape=true,
+        frame=tB,
+        numbers=left, 
+        numberstyle=\tiny,
+        basicstyle=\scriptsize\linespread{1.3}\selectfont, 
+        keywordstyle=\color{black}\bfseries\em,
+        keywords={,input, output, return, datatype, function, in, if, else, foreach, while, begin, end, for, sort, is, initialize, } %add the keywords you want, or load a language as Rubens explains in his comment above.
+        numbers=left,
+        xleftmargin=.04\textwidth,
+        #1 % this is to add specific settings to an usage of this environment (for instnce, the caption and referable label)
+    }
+}
+{}
+
+\usepackage{emoji}
+\newcommand{\R}{{\mathbb R}}
+\date{}
+
+
+\fontdimen16\textfont2 = 9\fontdimen16\textfont2
+\fontdimen16\scriptfont2 = 9\fontdimen16\scriptfont2 
+\fontdimen17\textfont2 = 9\fontdimen17\textfont2
+\fontdimen17\scriptfont2 = 9\fontdimen17\scriptfont2 
+
+\let\oldemoji\emoji
+\renewcommand{\emoji}[1]{\ensuremath{\smash{\vcenter{\hbox{\scalebox{1.1}[1.2]{\oldemoji{#1}}}}}}}
+\newcommand{\bigemoji}[1]{\scalebox{1.3}[1.35]{\oldemoji{#1}}}
+\newcommand{\smallemoji}[1]{\scalebox{.8}[.87]{\oldemoji{#1}}}
+\newcommand{\elephant}{\ensuremath{{\emoji{elephant}\kern-.09em}}}
+% \newcommand{\matriarch}{\emoji{mammoth}}
+\newcommand{\herd}{\smash{\vcenter{\hbox{\kern-.05em\bigemoji{elephant}\kern-.6em\smallemoji{elephant}\kern-.55em\bigemoji{elephant}\kern-1em\bigemoji{elephant}\kern-.7em\bigemoji{elephant}\kern-.09em}}}}
+% \newcommand{\population}{\herd\kern-2em\herd}
+\newcommand{\population}{\ensuremath{\{\herd_1, \herd_2,\ldots, \herd_m\}}}
+
+% \newcommand{\forest}{\smash{\vcenter{\hbox{\kern-.05em\bigemoji{deciduous-tree}\kern-.6em\smallemoji{deciduous-tree}\kern-.55em\bigemoji{deciduous-tree}\kern-1em\bigemoji{deciduous-tree}\kern-.09em}}}}
+
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\DeclareMathOperator*{\dom}{dom}
+
+\newcommand{\mathcms}[1]{\text{\fontspec{Comic Neue}#1}}
+\newcommand{\mathcmsbf}[1]{\textbf{\fontspec{Comic Neue}#1}}
+
+\setemojifont{AppleColorEmoji.ttf}
+
+\begin{document}
+\author{Vincent Graham}
+\title{Data Clustering with Elephant Herding Optimization}
+\maketitle
+\thispagestyle{plain}
+
+\begin{abstract}
+Clustering is a data analysis task that groups objects using a similarity measure. In this paper, I will present an overview of a clustering algorithm based on the herd structure and behavior of the African Savanna Elephant. This will be done using biological analogy and several derivations from other iterative optimization strategies. A gradient-based version of elephant herding optimization will also be discussed and compared against the original on several data sets. A more detailed example is shown for the Fisher Iris data set. This paper will provide a MATLAB implementation of both algorithms.
+\end{abstract}
+
+% \subfile{algorithm.tex}
+
+\subfile{introduction.tex}
+\subfile{eho.tex}
+\subfile{derivations.tex}
+\subfile{results.tex}
+\nocite{*}
+\clearpage
+
+\bibliographystyle{plain}
+\bibliography{elephants.bib, introduction.bib}
+\newpage
+\clearpage
+
+\appendix
+\subsection{Particle swarm optimization}
+\lstinputlisting{code/pso.m}
+\clearpage
+\lstinputlisting{code/pso_1d.m}
+\clearpage
+\subsection{Elephant herding optmization}
+\lstinputlisting{code/eho.m}
+\clearpage
+\subsection{Gradient based elephant herding optimization}
+\lstinputlisting{code/gbeho.m}
+\clearpage
+\lstinputlisting{code/LEO.m}
+\clearpage
+\subsection{Other}
+\lstinputlisting{code/fitness.m}
+\clearpage
+
+\end{document}
